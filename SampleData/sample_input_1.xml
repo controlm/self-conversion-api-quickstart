@@ -1,0 +1,51 @@
+<BOX DATACENTER="DS" Box_Name="Box1"> 
+    <JOB Name="JOB1" UserName="USER1" Group="ICA" Type="OS" Command="c:\test1.bat" /> 
+    <JOB Name="JOB2" UserName="USER1" Group="ICA" Type="OS" Command="c:\test2.bat" /> 
+    <JOB Name="JOB3" UserName="USER1" Group="ICA" Type="OS" Command="c:\test3.bat" /> 
+    <JOB Name="JOB4" UserName="USER1" Group="ICA" Type="SAP" >
+        <saptask>
+            <jobname>SAP_TEST</jobname>
+            <stepcount>1</stepcount>
+            <steps>
+                <step>
+                    <stepid>1</stepid>
+                    <type>ABAP</type>
+                    <abap>
+                        <params>Z_00497_US_CHG</params>
+                        <varientvalue>VARIANT1</varientvalue>
+                        <abapprogram>ZPAO_JJ_WILMA_OUTBOUND</abapprogram>
+                    </abap>
+                </step>
+            </steps>
+        </saptask>
+    </JOB>
+	<JOB Name="JOB5" UserName="USER1" Group="ICA" Type="MFT" >
+        <transfer>
+					<tranfertype>BINARY</tranfertype>
+					<source>"C:\x.exe"</source>
+					<destination>"C:\target\"</destination>
+        </transfer>
+		 <transfer>
+					<tranfertype>ASCII</tranfertype>
+					<source>"C:\y.txt"</source>
+					<destination>"D:\target_y.txt"</destination>
+        </transfer>
+    </JOB>
+	<JOB Name="JOB6" UserName="USER1" Group="ICA" Type="SAPBW"  >
+		<saptask>
+			<type>ProcessChain</type>
+			<ProcessChain>
+				<ID>Process Chain ID</ID>
+				<Description>Process Chain Description</Description>
+				<RerunOption>FromStart</RerunOption>
+			</ProcessChain>
+		</saptask>
+    </JOB>
+
+	<Dependency FromJOB="JOB1" ToJob="JOB2" ></Dependency>
+	<Dependency FromJOB="JOB2" ToJob="JOB3" ></Dependency>
+	<Dependency FromJOB="JOB2" ToJob="JOB4" ></Dependency>
+	<Dependency FromJOB="JOB3" ToJob="JOB5" ></Dependency>
+	<Dependency FromJOB="JOB4" ToJob="JOB5" ></Dependency>
+	<Dependency FromJOB="JOB5" ToJob="JOB6" ></Dependency>
+</BOX>

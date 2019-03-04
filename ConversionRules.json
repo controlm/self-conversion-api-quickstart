@@ -1,0 +1,565 @@
+{
+  "hierarchyRules" : [ {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Parent element name",
+        "value" : "BOX",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Link job to folder Rule ----\n\nString argument = \"BOX\";\ndef jobsList = ctmWorkspace.getAllJobs();\njobsList.each  { ctmJob ->\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\n\tCtmXmlElement parentElement = jobElement.getParent();\n\tif(parentElement != null && parentElement.getTagName().equals(argument))\n\t{\n\t\tCtmFolder ctmFolder = ctmWorkspace.getFolder(parentElement);\n\t\tctmWorkspace.insertJobToFolder(ctmJob, ctmFolder);\n\t}\n}"
+    },
+    "name" : "Link jobs to folders",
+    "category" : 2,
+    "type" : "regular"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "",
+        "value" : "",
+        "operator" : "Equal"
+      } ],
+      "script" : "//---Link folder to folder Rule---\n\nString argument = \"\";\ndef foldersList = ctmWorkspace.getAllFolders();\nfoldersList.each  { ctmSubFolder ->\n\tCtmXmlElement subFolderElement = ctmSubFolder.getFolderInputXmlData();\n\tCtmXmlElement parentElement = subFolderElement.getParent();\n\tif(parentElement != null && parentElement.getTagName().equals(argument))\n\t{\n\t\tCtmFolder ctmFolder = ctmWorkspace.getFolder(parentElement);\n\t\tctmWorkspace.insertFolderToFolder(ctmSubFolder, ctmFolder);\n\t}\n}"
+    },
+    "name" : "Link folders to folders",
+    "category" : 2,
+    "type" : "regular"
+  } ],
+  "rulesForServer" : [ {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "BOX",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Folder Rule ----\n\nString xpathQuery = \"//BOX\";    // XPath query of the XML element we look for in XML Input Data\n\n// Retrieve all elements with tag name equals to \"BOX\" XML elements into folderElements list\nList<CtmXmlElement> folderElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n\n// Run in a loop on all elements with tag name equals to \"BOX\" XML elements found, and create a Control-M Folder for each one of them\n// For each Control-M Folder created we keep the equivalent XML element data\nfor(CtmXmlElement folderElement : folderElements) {\n CtmFolder ctmFolder = ctmWorkspace.createFolder(folderElement);\n}"
+    },
+    "name" : "Create Folder",
+    "category" : 0,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Box_Name",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Folder Name Rule ----\n\n// For each Control-M Folder created we getting the value of attribute name \"Box_Name\" from\n// the equivalent XML element data and set the value to be the Folder name\nString argument = \"Box_Name\";\nctmWorkspace.getAllFolders().each{ ctmFolder ->\n\tCtmXmlElement folderElement = ctmFolder.getFolderInputXmlData();\n\tString folderName = folderElement.getAttribute(argument);\n\tctmFolder.setName(folderName);\n}\n"
+    },
+    "name" : "Folder Name",
+    "category" : 0,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "JOB",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Job Rule ----\n\nString xpathQuery = \"//JOB\";    // XPath query of the XML element we look for in XML Input Data\n\n// Retrieve all elements with tag name equals to \"JOB\" XML elements into jobElements list\nList<CtmXmlElement> jobElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n\n// Run in a loop on all elements with tag name equals to \"JOB\" XML elements found, and create a Control-M Job for each one of them\n// For each Control-M Job created we keep the equivalent XML element data\nfor(CtmXmlElement jobElement : jobElements) {\n CtmJob ctmJob = ctmWorkspace.createJob(jobElement);\n}"
+    },
+    "name" : "Create Job",
+    "category" : 1,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Name",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Job Name Rule ----\n\n// For each Control-M Job created we getting the value of attribute name \"Name\" from\n// the equivalent XML element data and set the value to be the Job name\nString argument = \"Name\";\nctmWorkspace.getAllJobs().each{ ctmJob ->\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\n\tString jobName = jobElement.getAttribute(argument);\n\tctmJob.setName(jobName);\n}\n"
+    },
+    "name" : "Job Name",
+    "category" : 1,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Parent element name",
+        "value" : "BOX",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Link job to folder Rule ----\n\nString argument = \"BOX\";\ndef jobsList = ctmWorkspace.getAllJobs();\njobsList.each  { ctmJob ->\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\n\tCtmXmlElement parentElement = jobElement.getParent();\n\tif(parentElement != null && parentElement.getTagName().equals(argument))\n\t{\n\t\tCtmFolder ctmFolder = ctmWorkspace.getFolder(parentElement);\n\t\tctmWorkspace.insertJobToFolder(ctmJob, ctmFolder);\n\t}\n}"
+    },
+    "name" : "Link jobs to folders",
+    "category" : 2,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "After",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- In Condition Rule ----\n\ndef jobsList = ctmWorkspace.getAllJobs();\njobsList.each { ctmJob ->\n    String targetJob = ctmJob.general().getName();\n    // Retrieve all Dependency elements that contain current job name in \"ToJob\" attribute\n    String xpathQuery = \"//Dependency[@ToJob=\\\"\" + targetJob + \"\\\"]\";\n    List<CtmXmlElement> dependenciesXmlElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n    for(CtmXmlElement dependencyElement: dependenciesXmlElements) \n    {\n        // Get the source job name\n    \tString sourceJob = dependencyElement.getAttribute(\"FromJOB\");\n    \t// Build condiiton name in {SourceJob-To-TagetJob} pattern\n    \tString inConditionName = sourceJob + \"-TO-\" + targetJob;\n    \tctmJob.prerequisites().addInCondition(inConditionName);\n    }\n}"
+    },
+    "name" : "In Condition",
+    "category" : 4,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Before",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Out Condition Rule ----\n\ndef jobsList = ctmWorkspace.getAllJobs();\njobsList.each { ctmJob ->\n    String sourceJob = ctmJob.general().getName();\n    // Retrieve all Dependency elements that contain current job name in \"FromJob\" attribute\n    String xpathQuery = \"//Dependency[@FromJOB=\\\"\" + sourceJob + \"\\\"]\";\n    List<CtmXmlElement> dependenciesXmlElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n    for(CtmXmlElement dependencyElement: dependenciesXmlElements) \n    {\n        // Get the target job name\n    \tString targetJob = dependencyElement.getAttribute(\"ToJob\");\n    \t// Build condiiton name in {SourceJob-To-TagetJob} pattern\n    \tString outConditionName = sourceJob + \"-TO-\" + targetJob;\n    \tctmJob.actions().addOutCondition(outConditionName);\n    }\n}"
+    },
+    "name" : "Out Condition",
+    "category" : 4,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Type",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Os Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElement.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"OS\")){\r\n\t\tctmJob.setOsType();\r\n\t}\r\n}"
+    },
+    "jobTypeName" : "OS",
+    "name" : "OS Job",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Command",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Os Command Rule ----\r\n\r\nString argument = \"Command\";\r\nctmWorkspace.getOsJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString commandValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().osParameters().setCommand(commandValue);\r\n}"
+    },
+    "jobTypeName" : "OS",
+    "name" : "OS Command",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "UserName",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Os Run As Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getOsJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString runAsValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().osParameters().setRunAs(runAsValue);\r\n}"
+    },
+    "jobTypeName" : "OS",
+    "name" : "OS Run As",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Type",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create SapR3 Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElementData.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"SAP\")){\r\n\t\tctmJob.setSapR3Type();\r\n\t}\r\n}"
+    },
+    "jobTypeName" : "SAP R3",
+    "name" : "SAP R3 Job",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "jobname",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create SapR3 jobname Rule ----\r\n\r\nString xpathQuery = \"jobname\";\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> sapXmlElements = jobElementData.getAllDecnedElementByName(xpathQuery);\r\n\tfor(CtmXmlElement sapXmlElement : sapXmlElements) {\r\n\t\tString sAPJobNameValue = sapXmlElement.getText()\r\n\tctmJob.general().sapR3Parameters().setSAPJobName(sAPJobNameValue);\r\n\t}\r\n}"
+    },
+    "jobTypeName" : "SAP R3",
+    "name" : "SAP R3 SAP Job Name",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "UserName",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create SapR3 Connection Profile Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString connectionProfileValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().sapR3Parameters().setConnectionProfile(connectionProfileValue);\r\n}"
+    },
+    "jobTypeName" : "SAP R3",
+    "name" : "SAP R3 Connection Profile",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "",
+        "value" : "",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create SapR3 Action Rule ----\r\n\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tctmJob.general().sapR3Parameters().setAction(SapR3Action.CreateANewJob);\r\n}"
+    },
+    "jobTypeName" : "SAP R3",
+    "name" : "SAP R3 Action",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "abap",
+        "operator" : "Equal"
+      } ],
+      "script" : "//---- Create SapR3 abap Rule ----\r\n\r\nString xpathQuery = \"abap\";\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData  = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> abapXmlElements = jobElementData.getAllDecnedElementByName(xpathQuery);\r\n\tfor(CtmXmlElement abapXmlElement : abapXmlElements) {\r\n\t    String variant = abapXmlElement.getFirstChildElementByName(\"varientvalue\").getText();\r\n\t    String abapProgram = abapXmlElement.getFirstChildElementByName(\"abapprogram\").getText();\r\n    \tSapR3AbapStepAPI step = ctmJob.general().sapR3Parameters().addAbapStep();\r\n\t    step.setAbapProgramName(abapProgram);\r\n\t    step.setVariantName(variant);\r\n    }\r\n}"
+    },
+    "jobTypeName" : "SAP R3",
+    "name" : "SAP R3 Create - Step Attributes",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Type",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create SapBW Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElement.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"SAPBW\")){\r\n\t\tctmJob.setSapBWType();\r\n\t}\r\n}"
+    },
+    "jobTypeName" : "SAP BW",
+    "name" : "SAP BW Job",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "UserName",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create SapBW Connection Profile Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getSapBWJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString connectionProfileValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().sapBWParameters().setConnectionProfile(connectionProfileValue);\r\n}"
+    },
+    "jobTypeName" : "SAP BW",
+    "name" : "SAP BW Connection Profile",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "Type",
+        "operator" : "Equal"
+      } ],
+      "script" : "//---Create SAP BW Process Chain Rule ---\r\n\r\nctmWorkspace.getSapBWJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> ctmXmlElementResult = jobElement.getAllDecnedElementByName(\"type\");\r\n\tfor(CtmXmlElement ctmXmlElement : ctmXmlElementResult)\r\n\t{\r\n\t\tString type = ctmXmlElement.getText();\r\n\t\tif (type != null && type.equals(\"ProcessChain\"))\r\n\t\t{\r\n\t\t    CtmXmlElement processChainElement = jobElement.getAllDecnedElementByName(\"ProcessChain\").get(0);\r\n\t\t    System.out.println(processChainElement.toString());\r\n\t\t    if (processChainElement != null)\r\n\t        {\r\n\t            ctmJob.general().sapBWParameters().setProcessType(SapBWProcessType.ProcessChain);\r\n\t            CtmXmlElement idElement = processChainElement.getFirstChildElementByName(\"ID\");\r\n\t            if (idElement != null)\r\n\t                ctmJob.general().sapBWParameters().setID(idElement.getText());\r\n\t            CtmXmlElement descElement = processChainElement.getFirstChildElementByName(\"Description\");\r\n\t            if (descElement != null)\r\n\t                ctmJob.general().sapBWParameters().setDescription(descElement.getText());\r\n\t            CtmXmlElement rerunOptionElement = processChainElement.getFirstChildElementByName(\"RerunOption\");\r\n\t            if (rerunOptionElement != null)\r\n\t            {\r\n\t                String rerunOption = rerunOptionElement.getText();\r\n\t                if (rerunOption.equals(\"FromStart\"))\r\n\t                    ctmJob.general().sapBWParameters().setReRunOption(SapBWRerunOption.RerunFromStart);\r\n\t            }\r\n\t        }\r\n\t\t}\r\n\t}        \r\n}"
+    },
+    "jobTypeName" : "SAP BW",
+    "name" : "SAP BW Process Chain",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Type",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create FileTransfer Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElementData.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"MFT\")){\r\n\t\tctmJob.setFileTransferType();\r\n\t}\r\n}"
+    },
+    "jobTypeName" : "File Transfer",
+    "name" : "File Transfer Job",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "UserName",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create FileTransfer Connection Profile Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getFileTransferJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString connectionProfileValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().fileTransferParameters().setConnectionProfile(connectionProfileValue);\r\n}"
+    },
+    "jobTypeName" : "File Transfer",
+    "name" : "File Transfer Connection Profile",
+    "category" : 3,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "transfer",
+        "operator" : "Equal"
+      } ],
+      "script" : "//---- Create FileTransfer transfer Rule ----\r\n\r\nString xpathQuery = \"transfer\";\r\nctmWorkspace.getFileTransferJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> transferXmlElements = jobElementData.getDirectChildsElementbyName(xpathQuery);\r\n\tfor(CtmXmlElement transferElement : transferXmlElements) {\r\n        String tranfertype = transferElement.getFirstChildElementByName(\"tranfertype\").getText();\r\n        String leftPath = transferElement.getFirstChildElementByName(\"source\").getText();\r\n        String rightPath = transferElement.getFirstChildElementByName(\"destination\").getText();\r\n\t    CtmTransfer transfer = ctmJob.general().fileTransferParameters().addNewTransfer();\r\n     \ttransfer.setRightPath(rightPath);\r\n     \ttransfer.setLeftPath(leftPath);\r\n     \tif(tranfertype != null && tranfertype.equals(\"BINARY\")){\r\n     \t    transfer.setTransferType(TransferType.Binary);\r\n     \t}else{\r\n     \t    transfer.setTransferType(TransferType.Ascii);\r\n     \t}\r\n    \ttransfer.setTransferOption(TransferOption.Filewatch_And_Transfer_from_left_to_right);\r\n\t}\r\n}"
+    },
+    "jobTypeName" : "File Transfer",
+    "name" : "File Transfer Transfer Attributes",
+    "category" : 3,
+    "type" : "script"
+  } ],
+  "projectRuleSetDescription" : "",
+  "folderRules" : [ {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "BOX",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Folder Rule ----\n\nString xpathQuery = \"//BOX\";    // XPath query of the XML element we look for in XML Input Data\n\n// Retrieve all elements with tag name equals to \"BOX\" XML elements into foldersElementData list\nList<CtmXmlElement> foldersElementData = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n\n// Run in a loop on all elements with tag name equals to \"BOX\" XML elements found, and create a Control-M Folder for each one of them\n// For each Control-M Folder created we keep the equivalent XML element data\nfor(CtmXmlElement folderElementData : foldersElementData) {\n CtmFolder ctmFolder = ctmWorkspace.createFolder(folderElementData);\n}"
+    },
+    "name" : "Create Folder",
+    "category" : 0,
+    "type" : "regular"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Box_Name",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Folder Name Rule ----\n\n// For each Control-M Folder created we getting the value of attribute name \"Box_Name\" from\n// the equivalent XML element data and set the value to be the Folder name\nString argument = \"Box_Name\";\nctmWorkspace.getAllFolders().each{ ctmFolder ->\n\tCtmXmlElement folderElement = ctmFolder.getFolderInputXmlData();\n\tString folderName = folderElement.getAttribute(argument);\n\tctmFolder.setName(folderName);\n}\n"
+    },
+    "name" : "Folder Name",
+    "category" : 0,
+    "type" : "regular"
+  } ],
+  "jobTypesRules" : {
+    "OS" : [ {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "Type",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create Os Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElement.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"OS\")){\r\n\t\tctmJob.setOsType();\r\n\t}\r\n}"
+      },
+      "jobTypeName" : "OS",
+      "name" : "Job",
+      "category" : 3,
+      "type" : "script"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "Command",
+          "operator" : "Equal"
+        } ],
+        "script" : "//---Create Os Command Rule---\r\n\r\nString argument = \"Command\";\r\nctmWorkspace.getOsJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString commandValue = jobElementData.getAttribute(argument);\r\n\tctmJob.general().osParameters().setCommand(commandValue);\r\n}"
+      },
+      "jobTypeName" : "OS",
+      "name" : "Command",
+      "category" : 3,
+      "type" : "regular"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "UserName",
+          "operator" : "Equal"
+        } ],
+        "script" : "//---Create Os Run As Rule---\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getOsJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString runAsValue = jobElementData.getAttribute(argument);\r\n\tctmJob.general().osParameters().setRunAs(runAsValue);\r\n}"
+      },
+      "jobTypeName" : "OS",
+      "name" : "Run As",
+      "category" : 3,
+      "type" : "regular"
+    } ],
+    "SAP R3" : [ {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "Type",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create SapR3 Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElementData.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"SAP\")){\r\n\t\tctmJob.setSapR3Type();\r\n\t}\r\n}"
+      },
+      "jobTypeName" : "SAP R3",
+      "name" : "Job",
+      "category" : 3,
+      "type" : "script"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Element Name",
+          "value" : "jobname",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create SapR3 jobname Rule ----\r\n\r\nString xpathQuery = \"jobname\";\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> sapXmlElements = jobElementData.getAllDecnedElementByName(xpathQuery);\r\n\tfor(CtmXmlElement sapXmlElement : sapXmlElements) {\r\n\t\tString sAPJobNameValue = sapXmlElement.getText()\r\n\tctmJob.general().sapR3Parameters().setSAPJobName(sAPJobNameValue);\r\n\t}\r\n}"
+      },
+      "jobTypeName" : "SAP R3",
+      "name" : "SAP Job Name",
+      "category" : 3,
+      "type" : "script"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "UserName",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create SapR3 Connection Profile Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString connectionProfileValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().sapR3Parameters().setConnectionProfile(connectionProfileValue);\r\n}"
+      },
+      "jobTypeName" : "SAP R3",
+      "name" : "Connection Profile",
+      "category" : 3,
+      "type" : "regular"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "",
+          "value" : "",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create SapR3 Action Rule ----\r\n\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tctmJob.general().sapR3Parameters().setAction(SapR3Action.CreateANewJob);\r\n}"
+      },
+      "jobTypeName" : "SAP R3",
+      "name" : "Action",
+      "category" : 3,
+      "type" : "script"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Element Name",
+          "value" : "abap",
+          "operator" : "Equal"
+        } ],
+        "script" : "//---- Create SapR3 abap Rule ----\r\n\r\nString xpathQuery = \"abap\";\r\nctmWorkspace.getSapR3Jobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData  = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> abapXmlElements = jobElementData.getAllDecnedElementByName(xpathQuery);\r\n\tfor(CtmXmlElement abapXmlElement : abapXmlElements) {\r\n\t    String variant = abapXmlElement.getFirstChildElementByName(\"varientvalue\").getText();\r\n\t    String abapProgram = abapXmlElement.getFirstChildElementByName(\"abapprogram\").getText();\r\n    \tSapR3AbapStepAPI step = ctmJob.general().sapR3Parameters().addAbapStep();\r\n\t    step.setAbapProgramName(abapProgram);\r\n\t    step.setVariantName(variant);\r\n    }\r\n}"
+      },
+      "jobTypeName" : "SAP R3",
+      "name" : "Create - Step Attributes",
+      "category" : 3,
+      "type" : "script"
+    } ],
+    "SAP BW" : [ {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "Type",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create SapBW Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElement.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"SAPBW\")){\r\n\t\tctmJob.setSapBWType();\r\n\t}\r\n}"
+      },
+      "jobTypeName" : "SAP BW",
+      "name" : "Job",
+      "category" : 3,
+      "type" : "script"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "UserName",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create SapBW Connection Profile Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getSapBWJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tString connectionProfileValue = jobElement.getAttribute(argument);\r\n\tctmJob.general().sapBWParameters().setConnectionProfile(connectionProfileValue);\r\n}"
+      },
+      "jobTypeName" : "SAP BW",
+      "name" : "Connection Profile",
+      "category" : 3,
+      "type" : "regular"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Element Name",
+          "value" : "Type",
+          "operator" : "Equal"
+        } ],
+        "script" : "//---Create SAP BW Process Chain Rule ---\r\n\r\nctmWorkspace.getSapBWJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> ctmXmlElementResult = jobElement.getAllDecnedElementByName(\"type\");\r\n\tfor(CtmXmlElement ctmXmlElement : ctmXmlElementResult)\r\n\t{\r\n\t\tString type = ctmXmlElement.getText();\r\n\t\tif (type != null && type.equals(\"ProcessChain\"))\r\n\t\t{\r\n\t\t    CtmXmlElement processChainElement = jobElement.getAllDecnedElementByName(\"ProcessChain\").get(0);\r\n\t\t    System.out.println(processChainElement.toString());\r\n\t\t    if (processChainElement != null)\r\n\t        {\r\n\t            ctmJob.general().sapBWParameters().setProcessType(SapBWProcessType.ProcessChain);\r\n\t            CtmXmlElement idElement = processChainElement.getFirstChildElementByName(\"ID\");\r\n\t            if (idElement != null)\r\n\t                ctmJob.general().sapBWParameters().setID(idElement.getText());\r\n\t            CtmXmlElement descElement = processChainElement.getFirstChildElementByName(\"Description\");\r\n\t            if (descElement != null)\r\n\t                ctmJob.general().sapBWParameters().setDescription(descElement.getText());\r\n\t            CtmXmlElement rerunOptionElement = processChainElement.getFirstChildElementByName(\"RerunOption\");\r\n\t            if (rerunOptionElement != null)\r\n\t            {\r\n\t                String rerunOption = rerunOptionElement.getText();\r\n\t                if (rerunOption.equals(\"FromStart\"))\r\n\t                    ctmJob.general().sapBWParameters().setReRunOption(SapBWRerunOption.RerunFromStart);\r\n\t            }\r\n\t        }\r\n\t\t}\r\n\t}        \r\n}"
+      },
+      "jobTypeName" : "SAP BW",
+      "name" : "Process Chain",
+      "category" : 3,
+      "type" : "script"
+    } ],
+    "File Transfer" : [ {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "Type",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create FileTransfer Job rule ----\r\n\r\nString argument = \"Type\";\r\nctmWorkspace.getAllJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString attributeValue = jobElementData.getAttribute(argument);\r\n\tif(attributeValue != null && attributeValue.equals(\"MFT\")){\r\n\t\tctmJob.setFileTransferType();\r\n\t}\r\n}"
+      },
+      "jobTypeName" : "File Transfer",
+      "name" : "Job",
+      "category" : 3,
+      "type" : "script"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Attribute Name",
+          "value" : "UserName",
+          "operator" : "Equal"
+        } ],
+        "script" : "//  ---- Create FileTransfer Connection Profile Rule ----\r\n\r\nString argument = \"UserName\";\r\nctmWorkspace.getFileTransferJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tString connectionProfileValue = jobElementData.getAttribute(argument);\r\n\tctmJob.general().fileTransferParameters().setConnectionProfile(connectionProfileValue);\r\n}"
+      },
+      "jobTypeName" : "File Transfer",
+      "name" : "Connection Profile",
+      "category" : 3,
+      "type" : "regular"
+    }, {
+      "rulesData" : {
+        "triplets" : [ {
+          "entityType" : "Element Name",
+          "value" : "transfer",
+          "operator" : "Equal"
+        } ],
+        "script" : "//---- Create FileTransfer transfer Rule ----\r\n\r\nString xpathQuery = \"transfer\";\r\nctmWorkspace.getFileTransferJobs().each{ ctmJob ->\r\n\tCtmXmlElement jobElementData = ctmJob.getJobInputXmlData();\r\n\tList<CtmXmlElement> transferXmlElements = jobElementData.getDirectChildsElementbyName(xpathQuery);\r\n\tfor(CtmXmlElement transferElement : transferXmlElements) {\r\n        String tranfertype = transferElement.getFirstChildElementByName(\"tranfertype\").getText();\r\n        String leftPath = transferElement.getFirstChildElementByName(\"source\").getText();\r\n        String rightPath = transferElement.getFirstChildElementByName(\"destination\").getText();\r\n\t    CtmTransfer transfer = ctmJob.general().fileTransferParameters().addNewTransfer();\r\n     \ttransfer.setRightPath(rightPath);\r\n     \ttransfer.setLeftPath(leftPath);\r\n     \tif(tranfertype != null && tranfertype.equals(\"BINARY\")){\r\n     \t    transfer.setTransferType(TransferType.Binary);\r\n     \t}else{\r\n     \t    transfer.setTransferType(TransferType.Ascii);\r\n     \t}\r\n    \ttransfer.setTransferOption(TransferOption.Filewatch_And_Transfer_from_left_to_right);\r\n\t}\r\n}"
+      },
+      "jobTypeName" : "File Transfer",
+      "name" : "Transfer Attributes",
+      "category" : 3,
+      "type" : "script"
+    } ]
+  },
+  "projectRuleSetName" : "ConversionRules",
+  "projectRuleSetControlMVersion" : "9.0.18",
+  "projectRuleSetDateCreated" : "Tue Feb 12 2019",
+  "folderAttributesRules" : [ ],
+  "scriptModeString" : "",
+  "projectRuleSetConversionType" : "UI\\Script Mode",
+  "dependencyRules" : [ {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "After",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- In Condition Rule ----\n\ndef jobsList = ctmWorkspace.getAllJobs();\njobsList.each { ctmJob ->\n    String targetJob = ctmJob.general().getName();\n    // Retrieve all Dependency elements that contain current job name in \"ToJob\" attribute\n    String xpathQuery = \"//Dependency[@ToJob=\\\"\" + targetJob + \"\\\"]\";\n    List<CtmXmlElement> dependenciesXmlElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n    for(CtmXmlElement dependencyElement: dependenciesXmlElements) \n    {\n        // Get the source job name\n    \tString sourceJob = dependencyElement.getAttribute(\"FromJOB\");\n    \t// Build condiiton name in {SourceJob-To-TagetJob} pattern\n    \tString inConditionName = sourceJob + \"-TO-\" + targetJob;\n    \tctmJob.prerequisites().addInCondition(inConditionName);\n    }\n}"
+    },
+    "name" : "In Condition",
+    "category" : 4,
+    "type" : "script"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Before",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Out Condition Rule ----\n\ndef jobsList = ctmWorkspace.getAllJobs();\njobsList.each { ctmJob ->\n    String sourceJob = ctmJob.general().getName();\n    // Retrieve all Dependency elements that contain current job name in \"FromJob\" attribute\n    String xpathQuery = \"//Dependency[@FromJOB=\\\"\" + sourceJob + \"\\\"]\";\n    List<CtmXmlElement> dependenciesXmlElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n    for(CtmXmlElement dependencyElement: dependenciesXmlElements) \n    {\n        // Get the target job name\n    \tString targetJob = dependencyElement.getAttribute(\"ToJob\");\n    \t// Build condiiton name in {SourceJob-To-TagetJob} pattern\n    \tString outConditionName = sourceJob + \"-TO-\" + targetJob;\n    \tctmJob.actions().addOutCondition(outConditionName);\n    }\n}"
+    },
+    "name" : "Out Condition",
+    "category" : 4,
+    "type" : "script"
+  } ],
+  "jobRules" : [ {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Element Name",
+        "value" : "JOB",
+        "operator" : "Equal"
+      } ],
+      "script" : "//  ---- Create Job Rule ----\n\nString xpathQuery = \"//JOB\";    // XPath query of the XML element we look for in XML Input Data\n\n// Retrieve all elements with tag name equals to \"JOB\" XML elements into jobElements list\nList<CtmXmlElement> jobElements = ctmXmlQuery.findXmlElementsByXPath(xpathQuery);\n\n// Run in a loop on all elements with tag name equals to \"JOB\" XML elements found, and create a Control-M Job for each one of them\n// For each Control-M Job created we keep the equivalent XML element data\nfor(CtmXmlElement jobElement : jobElements) {\n CtmJob ctmJob = ctmWorkspace.createJob(jobElement);\n}"
+    },
+    "name" : "Create Job",
+    "category" : 1,
+    "type" : "regular"
+  }, {
+    "rulesData" : {
+      "triplets" : [ {
+        "entityType" : "Attribute Name",
+        "value" : "Name",
+        "operator" : "Equal"
+      } ],
+      "script" : "// ---- Job Name Rule ----\n\n// For each Control-M Job created we getting the value of attribute name \"Name\" from\n// the equivalent XML element data and set the value to be the Job name\nString argument = \"Name\";\nctmWorkspace.getAllJobs().each{ ctmJob ->\n\tCtmXmlElement jobElement = ctmJob.getJobInputXmlData();\n\tString jobName = jobElement.getAttribute(argument);\n\tctmJob.setName(jobName);\n}\n"
+    },
+    "name" : "Job Name",
+    "category" : 1,
+    "type" : "regular"
+  } ],
+  "jobAttributesRules" : [ ]
+}

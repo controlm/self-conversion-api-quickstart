@@ -1,0 +1,51 @@
+<BOX DATACENTER="DS" Box_Name="Box2"> 
+    <JOB Name="JOB7" UserName="USER2" Group="ICA" Type="OS" Command="c:\test6.bat" /> 
+    <JOB Name="JOB8" UserName="USER2" Group="ICA" Type="OS" Command="c:\test7.bat" /> 
+    <JOB Name="JOB9" UserName="USER2" Group="ICA" Type="MFT">
+        <transfer>
+					<tranfertype>BINARY</tranfertype>
+					<source>"C:\x.exe"</source>
+					<destination>"C:\target\"</destination>
+        </transfer>
+		 <transfer>
+					<tranfertype>ASCII</tranfertype>
+					<source>"C:\y.txt"</source>
+					<destination>"D:\target_y.txt"</destination>
+        </transfer>
+    </JOB>
+    <JOB Name="JOB10" UserName="USER1" Group="ICA" Type="SAP" >
+        <saptask>
+            <jobname>SAP_TEST</jobname>
+            <stepcount>1</stepcount>
+            <steps>
+                <step>
+                    <stepid>1</stepid>
+                    <type>ABAP</type>
+                    <abap>
+                        <params>Z_00498_US_CHG</params>
+                        <varientvalue>VARIANT2</varientvalue>
+                        <abapprogram>ZPAO_JJ_WILMA_OUTBOUND</abapprogram>
+                    </abap>
+                </step>
+            </steps>
+        </saptask>
+    </JOB>
+	<JOB Name="JOB11" UserName="USER2" Group="ICA" Type="MFT" >
+        <transfer>
+					<tranfertype>BINARY</tranfertype>
+					<source>"C:\x.exe"</source>
+					<destination>"C:\target\"</destination>
+        </transfer>
+		 <transfer>
+					<tranfertype>ASCII</tranfertype>
+					<source>"C:\y.txt"</source>
+					<destination>"D:\target_y.txt"</destination>
+        </transfer>
+    </JOB>
+	<JOB Name="JOB12" UserName="USER2" Group="ICA" Type="OS" Command="c:\test11.bat" /> 
+	<Dependency FromJOB="JOB7" ToJob="JOB9" ></Dependency>
+	<Dependency FromJOB="JOB8" ToJob="JOB9" ></Dependency>
+	<Dependency FromJOB="JOB9" ToJob="JOB10" ></Dependency>
+	<Dependency FromJOB="JOB9" ToJob="JOB11" ></Dependency>
+	<Dependency FromJOB="JOB11" ToJob="JOB12" ></Dependency>
+</BOX>
