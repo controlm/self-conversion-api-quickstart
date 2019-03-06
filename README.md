@@ -1,14 +1,11 @@
 # Control-M Self Conversion API quick start
----
 This repository contains "Conversion Rules" code samples that use groovy and [**Control-M Self Conversion API**](https://docs.bmc.com/docs/ctmselfconv/control-m-self-conversion-api-814570051.html) to convert sample demo input data into Control-M Data. You can also view these conversion rules code samples from the Control-M Self Conversion homepage in the “sample_project”.
 You can use these conversion rules code samples to learn different script rules structures and learn how you can use the [**Control-M Self Conversion API**](https://docs.bmc.com/docs/ctmselfconv/control-m-self-conversion-api-814570051.html) to create Control-M data, such as Folders, Jobs, Hierarchy, Conditions, and different job types (like OS Command jobs SAP R3, File transfer, Informatica and more).
 
 # Online Documentation
----
 For more information, see [**Control-M Self Conversion**](https://docs.bmc.com/docs/ctmselfconv/control-m-self-conversion-817142681.html) and the [**Control-M Self Conversion API**](https://docs.bmc.com/docs/ctmselfconv/control-m-self-conversion-api-814570051.html) online documentation.
 To download the latest Control-M  Self Conversion, click: [**Download Control-M self-conversion**](ftp://ftp.bmc.com/pub/control-m/opensystem/Control-M_Conversions_for_DS/).
 # Demo Tool Conversion example
----
 ### The Demo Tool Conversion example includes:
 
 * __SampleData__ - A folder that holds demo tool sample Input Data in XML format that we want to convert to Control-M data.
@@ -65,7 +62,6 @@ __Hierarchy__: BOX > JOB|Smart Folder parent of Job
 6. Review the conversion results.
 
 ## Contribution guide
----
 To contribute, please follow these guidelines.
 
 ### Files, folders and naming conventions
