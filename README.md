@@ -4,7 +4,7 @@ You can use these conversion rules code samples to learn different script rules 
 
 # Online Documentation
 For more information, see [**Control-M Self Conversion**](https://docs.bmc.com/docs/ctmselfconv/control-m-self-conversion-817142681.html) and the [**Control-M Self Conversion API**](https://docs.bmc.com/docs/ctmselfconv/control-m-self-conversion-api-814570051.html) online documentation.
-To download the latest Control-M  Self Conversion, click: [**Download Control-M self-conversion**](ftp://ftp.bmc.com/pub/control-m/opensystem/Control-M_Conversions_for_DS/).
+To download the latest Control-M  Self Conversion, go to ftp://ftp.bmc.com/pub/control-m/opensystem/Control-M_Conversions_for_DS/.
 # Demo Tool Conversion example
 ### The Demo Tool Conversion example includes:
 
